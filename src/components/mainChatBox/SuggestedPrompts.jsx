@@ -23,13 +23,32 @@ const options = [
 
 const SuggestedPrompts = ({ handleDispatchPrompt }) => {
     const [showTooltipIndex, setShowTooltipIndex] = useState();
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [optionsToRender, setOptionsToRender] = useState(options);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        if (windowWidth <= 640) {
+            setOptionsToRender(options.slice(0, 2));
+        } else {
+            setOptionsToRender(options);
+        }
+    }, [windowWidth]);
+
     return (
         <div className="px-2 grid grid-cols-12 gap-2 mb-4">
-            {options.map((option, i) => (
+            {optionsToRender.map((option, i) => (
                 <button
                     key={option.title}
                     onClick={() => handleDispatchPrompt(`${option.title} ${option.sub}`)}
-                    className="group col-span-6 w-full border py-3 px-4 rounded-xl hover:bg-[#f9f9f9] flex justify-between items-center"
+                    className="group col-span-12 sm:col-span-6 w-full border py-3 px-4 rounded-xl hover:bg-[#f9f9f9] flex justify-between items-center"
                 >
                     <div className="flex flex-col overflow-hidden text-left text-sm font-medium">
                         <p className="truncate">{option.title}</p>
@@ -40,7 +59,7 @@ const SuggestedPrompts = ({ handleDispatchPrompt }) => {
                     <div
                         onMouseEnter={() => setShowTooltipIndex(i)}
                         onMouseLeave={() => setShowTooltipIndex(null)}
-                        className=" group-hover:flex p-1 bg-white rounded-full shadow relative"
+                        className="hidden group-hover:flex p-1 bg-white rounded-full shadow relative"
                     >
                         <IoArrowUp className="w-3 h-3 stroke-1" />
                         {showTooltipIndex === i && (

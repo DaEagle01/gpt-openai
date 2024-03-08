@@ -8,6 +8,8 @@ import Conversations from "./Conversations";
 const MainChatBox = () => {
     const [showWelcomeMessage, setShowWelcomeMessage] = useState(true)
     const [conversations, setConversations] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         const oldConversations = JSON.parse(localStorage.getItem('conversations'))
@@ -19,18 +21,17 @@ const MainChatBox = () => {
 
     return (
         <div className='flex-grow bg-white'>
-            {/* <SidebarHandler /> */}
             <div className="flex flex-col justify-between relative h-screen">
                 <div className="h-full">
                     <div className={`relative ${showWelcomeMessage ? "h-1/2" : ""}`}>
                         <ChatBoxNavbar />
                         {showWelcomeMessage && <WelcomeUser />}
                     </div>
-                    <div className={`relative h-[calc(100vh-140px)] overflow-y-scroll`}>
-                        {conversations?.length > 0 && <Conversations conversations={conversations} />}
+                    <div className={`relative ${conversations.length > 0 && "h-[calc(100vh-140px)]"} sm:h-[calc(100vh-140px)] overflow-y-scroll`}>
+                        {conversations?.length > 0 && <Conversations conversations={conversations} error={error} isLoading={isLoading} />}
                     </div>
                 </div>
-                <ChatInputBox setShowWelcomeMessage={setShowWelcomeMessage} conversations={conversations} setConversations={setConversations} />
+                <ChatInputBox setShowWelcomeMessage={setShowWelcomeMessage} conversations={conversations} setConversations={setConversations} error={error} setError={setError} isLoading={isLoading} setIsLoading={setIsLoading} />
             </div>
         </div>
     )

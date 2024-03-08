@@ -3,10 +3,9 @@ import { FaArrowUp } from "react-icons/fa6";
 import SuggestedPrompts from "./SuggestedPrompts";
 
 const ChatInputBox = (props) => {
-    const { setShowWelcomeMessage, conversations, setConversations } = props;
+    const { setShowWelcomeMessage, conversations, setConversations, isLoading, setIsLoading, error, setError } = props;
     const [prompt, setPrompt] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
+
     const disabled = !prompt.length;
     const textareaRef = useRef(null);
 
@@ -25,11 +24,12 @@ const ChatInputBox = (props) => {
 
     const handleDispatchPrompt = async (message) => {
         setConversations((prev) => {
-            return [...prev, { role: 'user', content: message }]
+            return [...prev, { role: 'user', content: message }, { role: 'ChatGPT', content: "" }]
         })
         setShowWelcomeMessage(false);
         setPrompt('')
         setIsLoading(true);
+
         try {
             let url = "https://api.openai.com/v1/chat/completions"
             let token = `Bearer ${import.meta.env.VITE_OPEN_AI_SECRET_KEY}`
@@ -100,9 +100,21 @@ const ChatInputBox = (props) => {
                         rows="1"
                         placeholder="Message ChatGPT…"
                     />
-                    <button type="submit" disabled={disabled} className="absolute bg-black disabled:opacity-10 p-[7px] rounded-lg right-5 bottom-3 h-max w-max">
-                        <FaArrowUp className="text-white w-4 h-4" />
-                    </button>
+                    {isLoading ? (
+                        <button disabled className="absolute bg-black/20 p-[7px] rounded-lg right-5 bottom-3 h-max w-max">
+                            <div className="relative w-full h-full flex items-center justify-center">
+                                <div className="w-4 h-4 animate-[ping_2s_linear_infinite] border rounded-full border-gray-200">
+                                </div>
+                                <div className="w-4 h-4 animate-[ping_2s_linear_3s_infinite] border rounded-full border-gray-200 absolute">
+                                </div>
+                            </div>
+
+                        </button>
+                    ) : (
+                        <button type="submit" disabled={disabled} className="absolute bg-black disabled:opacity-10 p-[7px] rounded-lg right-5 bottom-3 h-max w-max">
+                            <FaArrowUp className="text-white w-4 h-4" />
+                        </button>
+                    )}
                 </form>
             </div>
 
