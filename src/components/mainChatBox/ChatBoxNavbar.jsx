@@ -2,7 +2,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 const ChatBoxNavbar = () => {
     return (
-        <div className="absolute left-0 right-0">
+        <div className="relative z-50 left-0 right-0 bg-white">
             <div className="font-semibold p-2 flex justify-between items-center">
                 <button className="flex items-center gap-1 font-medium text-lg py-2 px-3 rounded-xl focus:bg-[#f9f9f9] hover:bg-[#f9f9f9]">
                     <p className="text-nowrap">
