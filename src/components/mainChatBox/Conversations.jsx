@@ -5,7 +5,7 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import PropTypes from 'prop-types';
 import TypingEffect from "./TypingEffect";
 
-const Conversations = ({ conversations, error, isLoading }) => {
+const Conversations = ({ conversations, error, isLoading, isNewMessage }) => {
     const messageRef = useRef(null);
     const isUser = (data) => data.role === 'user';
     return (
@@ -30,7 +30,7 @@ const Conversations = ({ conversations, error, isLoading }) => {
                                 <p className="text-gray-900 text-sm leading-6">
                                     {isUser(item) ? <>{item.content}</>
                                         :
-                                        i === conversations.length - 1 ?
+                                        (i === conversations.length - 1 && isNewMessage) ?
                                             <TypingEffect ref={messageRef} text={item.content} />
                                             :
                                             <ReactMarkdown>{item.content}</ReactMarkdown>

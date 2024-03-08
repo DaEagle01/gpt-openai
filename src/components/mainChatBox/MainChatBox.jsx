@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import SidebarHandler from "../sidebar/SidebarHandler";
 import ChatBoxNavbar from "./ChatBoxNavbar";
 import WelcomeUser from "./WelcomeUser";
 import ChatInputBox from "./ChatInputBox";
@@ -8,6 +7,7 @@ import Conversations from "./Conversations";
 const MainChatBox = () => {
     const [showWelcomeMessage, setShowWelcomeMessage] = useState(true)
     const [conversations, setConversations] = useState([]);
+    const [isNewMessage, setIsNewMessage] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -17,6 +17,7 @@ const MainChatBox = () => {
             setConversations(oldConversations);
             setShowWelcomeMessage(false);
         }
+        setIsNewMessage(false);
     }, [])
 
     return (
@@ -28,10 +29,10 @@ const MainChatBox = () => {
                         {showWelcomeMessage && <WelcomeUser />}
                     </div>
                     <div className={`relative ${conversations.length > 0 && "h-[calc(100vh-140px)]"} sm:h-[calc(100vh-140px)] overflow-y-scroll`}>
-                        {conversations?.length > 0 && <Conversations conversations={conversations} error={error} isLoading={isLoading} />}
+                        {conversations?.length > 0 && <Conversations conversations={conversations} error={error} isLoading={isLoading} isNewMessage={isNewMessage} />}
                     </div>
                 </div>
-                <ChatInputBox setShowWelcomeMessage={setShowWelcomeMessage} conversations={conversations} setConversations={setConversations} error={error} setError={setError} isLoading={isLoading} setIsLoading={setIsLoading} />
+                <ChatInputBox setShowWelcomeMessage={setShowWelcomeMessage} conversations={conversations} setConversations={setConversations} error={error} setError={setError} isLoading={isLoading} setIsLoading={setIsLoading} setIsNewMessage={setIsNewMessage} />
             </div>
         </div>
     )

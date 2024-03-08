@@ -3,7 +3,7 @@ import { FaArrowUp } from "react-icons/fa6";
 import SuggestedPrompts from "./SuggestedPrompts";
 
 const ChatInputBox = (props) => {
-    const { setShowWelcomeMessage, conversations, setConversations, isLoading, setIsLoading, error, setError } = props;
+    const { setShowWelcomeMessage, conversations, setConversations, isLoading, setIsLoading, error, setError, setIsNewMessage } = props;
     const [prompt, setPrompt] = useState("");
 
     const disabled = !prompt.length;
@@ -26,6 +26,7 @@ const ChatInputBox = (props) => {
         setConversations((prev) => {
             return [...prev, { role: 'user', content: message }, { role: 'ChatGPT', content: "" }]
         })
+        setIsNewMessage(true);
         setShowWelcomeMessage(false);
         setPrompt('')
         setIsLoading(true);
@@ -55,7 +56,6 @@ const ChatInputBox = (props) => {
                 })
             })
             let response = await res.json()
-            console.log(response)
             if (response) {
                 let newAllMessages = [...messagesToSend, response.choices[0].message]
                 localStorage.setItem('conversations', JSON.stringify(newAllMessages))
@@ -79,8 +79,6 @@ const ChatInputBox = (props) => {
             handleDispatchPrompt(prompt);
         }
     };
-
-    // console.log({ isLoading, error, conversations })
 
     return (
         <div className="absolute bottom-0 left-0 right-0 max-w-[48rem] mx-auto h-max bg-white">
