@@ -1,11 +1,18 @@
 import { SiOpenai } from "react-icons/si";
 import { FiEdit } from "react-icons/fi";
 import dummy from "../../assets/dummy.png";
+import SidebarHandler from "./SidebarHandler";
+import { useState } from "react";
 
 const Sidebar = () => {
+    const [showSidebar, setShowSidebar] = useState(true);
     return (
-        <sidebar className="w-[16.25rem] h-screen bg-[#f9f9f9] px-3 py-[0.875rem]" aria-label="Chat history">
-            <div className="relative flex flex-col justify-between flex-1 h-full transition-opacity duration-500 pr-2 font-medium cursor-pointer">
+        <sidebar
+            className={`w-[18.5rem] md:w-[16.25rem] px-3 ${showSidebar ? 'md:w-[16.25rem]' : 'md:w-0 px-0 -trans'}  h-screen bg-[#f9f9f9] py-[0.875rem] transition-all duration-500 `}
+            aria-label="Chat history"
+        >
+            <SidebarHandler showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+            <div className={`relative ${showSidebar ? 'flex' : 'hidden'} flex-col justify-between flex-1 h-full pr-2 font-medium cursor-pointer transform transition-transform duration-500 ${showSidebar ? "translate-x-0" : "-translate-x-full"}`}>
                 <div>
                     <div className="px-2 w-full h-10 flex justify-between items-center gap-2 rounded-lg hover:bg-[#ececec] sticky left-0 right-0 top-0 z-20 ">
                         <div className="h-7 w-7 flex-shrink-0 bg-white flex justify-center items-center rounded-full border">
@@ -50,7 +57,3 @@ const Sidebar = () => {
 }
 
 export default Sidebar
-
-/* 
-
-*/

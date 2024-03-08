@@ -87,10 +87,8 @@ const ChatInputBox = (props) => {
 
             {!conversations?.length && <SuggestedPrompts handleDispatchPrompt={handleDispatchPrompt} />}
 
-            {/* {conversations?.length > 0 && <Conversations conversations={conversations} />} */}
-
             <div className="relative">
-                <form onSubmit={handleSubmit} className="flex w-full items-center">
+                <form onSubmit={handleSubmit} className="flex w-full items-center px-2">
                     <textarea
                         ref={textareaRef}
                         name="prompt"
@@ -102,7 +100,7 @@ const ChatInputBox = (props) => {
                         rows="1"
                         placeholder="Message ChatGPT…"
                     />
-                    <button type="submit" disabled={disabled} className="absolute bg-black disabled:opacity-10 p-[7px] rounded-lg right-3 bottom-3 h-max w-max">
+                    <button type="submit" disabled={disabled} className="absolute bg-black disabled:opacity-10 p-[7px] rounded-lg right-5 bottom-3 h-max w-max">
                         <FaArrowUp className="text-white w-4 h-4" />
                     </button>
                 </form>

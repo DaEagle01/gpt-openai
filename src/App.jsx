@@ -4,7 +4,9 @@ import Sidebar from "./components/sidebar/Sidebar"
 function App() {
   return (
     <div className="relative flex antialiased">
-      <Sidebar />
+      <div className="hidden md:flex">
+        <Sidebar />
+      </div>
       <MainChatBox />
     </div>
   )

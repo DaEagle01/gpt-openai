@@ -8,7 +8,7 @@ const Conversations = ({ conversations }) => {
     const messageRef = useRef(null);
     const isUser = (data) => data.role === 'user';
     return (
-        <div className="max-w-[48rem] mx-auto overflow-y-auto">
+        <div className="max-w-[48rem] mx-auto overflow-y-auto py-2">
             <div className="w-full space-y-6 mb-6 px-5">
                 {conversations?.map((item, i) => (
                     <div key={i} className={`w-full flex ${isUser(item) ? 'justify-end' : 'justify-start'}`}>
@@ -29,10 +29,10 @@ const Conversations = ({ conversations }) => {
                                 <p className="text-gray-900 text-sm leading-6">
                                     {isUser(item) ? <>{item.content}</>
                                         :
-                                        i === conversations.length - 1 ?
-                                            <TypingEffect ref={messageRef} text={item.content} />
-                                            :
-                                            <ReactMarkdown>{item.content}</ReactMarkdown>
+                                        // i === conversations.length - 1 ?
+                                        //     <TypingEffect ref={messageRef} text={item.content} />
+                                        //     :
+                                        <ReactMarkdown>{item.content}</ReactMarkdown>
                                     }
                                 </p>
                             </div>

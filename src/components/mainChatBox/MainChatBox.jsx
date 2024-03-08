@@ -19,7 +19,7 @@ const MainChatBox = () => {
 
     return (
         <div className='flex-grow bg-white'>
-            <SidebarHandler />
+            {/* <SidebarHandler /> */}
             <div className="flex flex-col justify-between relative h-screen">
                 <div className="h-full">
                     <div className={`relative ${showWelcomeMessage ? "h-1/2" : ""}`}>
